@@ -1,0 +1,10 @@
+class Main {
+  fun f float a; int b {
+    print a+b    
+  }
+  fun main  int a 
+    c = 7           /* Error en 'c', esperaba { ;    */
+
+  }
+}
+

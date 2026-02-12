@@ -1,0 +1,130 @@
+Token: 1,1 class  -> (1,1): class es de tipo 10
+
+Token: 1,7 Main  -> (1,7): Main es de tipo 18
+
+Token: 1,12 {  -> (1,12): { es de tipo 3
+
+Token: 2,3 fun  -> (2,3): fun es de tipo 11
+
+Token: 2,7 main  -> (2,7): main es de tipo 18
+
+Token: 2,13 int  -> (2,13): int es de tipo 12
+
+Token: 2,17 a  -> (2,17): a es de tipo 18
+
+Token: 2,19 {  -> (2,19): { es de tipo 3
+
+Token: 4,5 print  -> (4,5): print es de tipo 17
+
+Token: 4,11 2  -> (4,11): 2 es de tipo 19
+
+Token: 4,12 <  -> (4,12): < es de tipo 7
+
+Token: 4,13 3  -> (4,13): 3 es de tipo 19
+
+Token: 4,14 ;  -> (4,14): ; es de tipo 6
+
+Token: 5,5 print  -> (5,5): print es de tipo 17
+
+Token: 5,11 2  -> (5,11): 2 es de tipo 19
+
+Token: 5,12 ==  -> (5,12): == es de tipo 7
+
+Token: 5,14 3  -> (5,14): 3 es de tipo 19
+
+Token: 5,15 ;  -> (5,15): ; es de tipo 6
+
+Token: 6,5 print  -> (6,5): print es de tipo 17
+
+Token: 6,11 2  -> (6,11): 2 es de tipo 19
+
+Token: 6,12 <=  -> (6,12): <= es de tipo 7
+
+Token: 6,14 3  -> (6,14): 3 es de tipo 19
+
+Token: 6,15 ;  -> (6,15): ; es de tipo 6
+
+Token: 7,5 print  -> (7,5): print es de tipo 17
+
+Token: 7,11 2  -> (7,11): 2 es de tipo 19
+
+Token: 7,12 >  -> (7,12): > es de tipo 7
+
+Token: 7,13 3  -> (7,13): 3 es de tipo 19
+
+Token: 7,14 ;  -> (7,14): ; es de tipo 6
+
+Token: 8,5 print  -> (8,5): print es de tipo 17
+
+Token: 8,11 2  -> (8,11): 2 es de tipo 19
+
+Token: 8,12 >=  -> (8,12): >= es de tipo 7
+
+Token: 8,14 3  -> (8,14): 3 es de tipo 19
+
+Token: 8,15 ;  -> (8,15): ; es de tipo 6
+
+Token: 9,5 print  -> (9,5): print es de tipo 17
+
+Token: 9,11 2  -> (9,11): 2 es de tipo 19
+
+Token: 9,12 !=  -> (9,12): != es de tipo 7
+
+Token: 9,14 3  -> (9,14): 3 es de tipo 19
+
+Token: 9,15 ;  -> (9,15): ; es de tipo 6
+
+Token: 10,5 float  -> (10,5): float es de tipo 13
+
+Token: 10,11 printando  -> (10,11): printando es de tipo 18
+
+Token: 10,20 ;  -> (10,20): ; es de tipo 6
+
+Token: 12,5 printando  -> (12,5): printando es de tipo 18
+
+Token: 12,14 =  -> (12,14): = es de tipo 5
+
+Token: 12,15 1234  -> (12,15): 1234 es de tipo 19
+
+Token: 12,19 /  -> (12,19): / es de tipo 9
+
+Token: 12,20 1  -> (12,20): 1 es de tipo 19
+
+Token: 12,21 *  -> (12,21): * es de tipo 9
+
+Token: 12,22 1  -> (12,22): 1 es de tipo 19
+
+Token: 12,23 +  -> (12,23): + es de tipo 8
+
+Token: 12,24 0.1  -> (12,24): 0.1 es de tipo 20
+
+Token: 12,27 -  -> (12,27): - es de tipo 8
+
+Token: 12,28 123.456  -> (12,28): 123.456 es de tipo 20
+
+Token: 12,35 *  -> (12,35): * es de tipo 9
+
+Token: 12,36 12.34  -> (12,36): 12.34 es de tipo 20
+
+Token: 12,41 ;  -> (12,41): ; es de tipo 6
+
+Token: 14,5 {  -> (14,5): { es de tipo 3
+
+Token: 15,7 int  -> (15,7): int es de tipo 12
+
+Token: 15,11 b  -> (15,11): b es de tipo 18
+
+Token: 15,12 ;  -> (15,12): ; es de tipo 6
+
+Token: 17,7 b  -> (17,7): b es de tipo 18
+
+Token: 17,9 ==  -> (17,9): == es de tipo 7
+
+Token: 17,12 7  -> (17,12): 7 es de tipo 19
+
+Token: 18,5 }  -> (18,5): } es de tipo 4
+
+Token: 19,3 }  -> (19,3): } es de tipo 4
+
+Token: 20,1 }  -> (20,1): } es de tipo 4
+

@@ -1,0 +1,174 @@
+Token: 1,1 class  -> (1,1): class es de tipo 10
+
+Token: 1,7 Main  -> (1,7): Main es de tipo 18
+
+Token: 1,12 {  -> (1,12): { es de tipo 3
+
+Token: 2,3 fun  -> (2,3): fun es de tipo 11
+
+Token: 2,7 main  -> (2,7): main es de tipo 18
+
+Token: 2,13 int  -> (2,13): int es de tipo 12
+
+Token: 2,17 a  -> (2,17): a es de tipo 18
+
+Token: 2,18 ;  -> (2,18): ; es de tipo 6
+
+Token: 2,19 float  -> (2,19): float es de tipo 13
+
+Token: 2,25 b  -> (2,25): b es de tipo 18
+
+Token: 2,27 {  -> (2,27): { es de tipo 3
+
+Token: 4,5 fun  -> (4,5): fun es de tipo 11
+
+Token: 4,9 submain  -> (4,9): submain es de tipo 18
+
+Token: 4,17 float  -> (4,17): float es de tipo 13
+
+Token: 4,23 c  -> (4,23): c es de tipo 18
+
+Token: 4,25 {  -> (4,25): { es de tipo 3
+
+Token: 5,7 print  -> (5,7): print es de tipo 17
+
+Token: 5,13 1  -> (5,13): 1 es de tipo 19
+
+Token: 5,14 +  -> (5,14): + es de tipo 8
+
+Token: 5,15 2  -> (5,15): 2 es de tipo 19
+
+Token: 5,16 -  -> (5,16): - es de tipo 8
+
+Token: 5,17 (  -> (5,17): ( es de tipo 0
+
+Token: 5,18 3  -> (5,18): 3 es de tipo 19
+
+Token: 5,19 *  -> (5,19): * es de tipo 9
+
+Token: 5,20 4.5  -> (5,20): 4.5 es de tipo 20
+
+Token: 5,23 /  -> (5,23): / es de tipo 9
+
+Token: 5,24 6  -> (5,24): 6 es de tipo 19
+
+Token: 5,25 )  -> (5,25): ) es de tipo 1
+
+Token: 5,26 ;  -> (5,26): ; es de tipo 6
+
+Token: 6,7 float  -> (6,7): float es de tipo 13
+
+Token: 6,13 d  -> (6,13): d es de tipo 18
+
+Token: 6,14 ;  -> (6,14): ; es de tipo 6
+
+Token: 7,7 d  -> (7,7): d es de tipo 18
+
+Token: 7,9 =  -> (7,9): = es de tipo 5
+
+Token: 7,11 a  -> (7,11): a es de tipo 18
+
+Token: 7,12 +  -> (7,12): + es de tipo 8
+
+Token: 7,13 b  -> (7,13): b es de tipo 18
+
+Token: 7,14 /  -> (7,14): / es de tipo 9
+
+Token: 7,15 c  -> (7,15): c es de tipo 18
+
+Token: 7,16 ;  -> (7,16): ; es de tipo 6
+
+Token: 8,7 if  -> (8,7): if es de tipo 14
+
+Token: 8,10 a  -> (8,10): a es de tipo 18
+
+Token: 8,11 <  -> (8,11): < es de tipo 7
+
+Token: 8,12 d  -> (8,12): d es de tipo 18
+
+Token: 8,14 :  -> (8,14): : es de tipo 2
+
+Token: 9,9 float  -> (9,9): float es de tipo 13
+
+Token: 9,15 e  -> (9,15): e es de tipo 18
+
+Token: 10,7 else  -> (10,7): else es de tipo 15
+
+Token: 11,9 int  -> (11,9): int es de tipo 12
+
+Token: 11,13 f  -> (11,13): f es de tipo 18
+
+Token: 12,7 fi  -> (12,7): fi es de tipo 16
+
+Token: 13,5 }  -> (13,5): } es de tipo 4
+
+Token: 15,5 class  -> (15,5): class es de tipo 10
+
+Token: 15,11 A  -> (15,11): A es de tipo 18
+
+Token: 15,13 {  -> (15,13): { es de tipo 3
+
+Token: 16,5 }  -> (16,5): } es de tipo 4
+
+Token: 18,5 class  -> (18,5): class es de tipo 10
+
+Token: 18,11 B  -> (18,11): B es de tipo 18
+
+Token: 18,13 {  -> (18,13): { es de tipo 3
+
+Token: 19,7 fun  -> (19,7): fun es de tipo 11
+
+Token: 19,11 mainB  -> (19,11): mainB es de tipo 18
+
+Token: 19,17 float  -> (19,17): float es de tipo 13
+
+Token: 19,23 g  -> (19,23): g es de tipo 18
+
+Token: 19,25 {  -> (19,25): { es de tipo 3
+
+Token: 20,9 {  -> (20,9): { es de tipo 3
+
+Token: 21,11 int  -> (21,11): int es de tipo 12
+
+Token: 21,15 h  -> (21,15): h es de tipo 18
+
+Token: 21,16 ;  -> (21,16): ; es de tipo 6
+
+Token: 23,11 h  -> (23,11): h es de tipo 18
+
+Token: 23,13 =  -> (23,13): = es de tipo 5
+
+Token: 23,15 7  -> (23,15): 7 es de tipo 19
+
+Token: 23,16 ;  -> (23,16): ; es de tipo 6
+
+Token: 25,11 float  -> (25,11): float es de tipo 13
+
+Token: 25,17 i  -> (25,17): i es de tipo 18
+
+Token: 25,18 ;  -> (25,18): ; es de tipo 6
+
+Token: 27,11 i  -> (27,11): i es de tipo 18
+
+Token: 27,13 =  -> (27,13): = es de tipo 5
+
+Token: 27,15 2.5  -> (27,15): 2.5 es de tipo 20
+
+Token: 27,19 !=  -> (27,19): != es de tipo 7
+
+Token: 27,22 2.4999  -> (27,22): 2.4999 es de tipo 20
+
+Token: 28,9 }  -> (28,9): } es de tipo 4
+
+Token: 29,7 }  -> (29,7): } es de tipo 4
+
+Token: 30,5 }  -> (30,5): } es de tipo 4
+
+Token: 34,5 print  -> (34,5): print es de tipo 17
+
+Token: 34,11 7  -> (34,11): 7 es de tipo 19
+
+Token: 35,3 }  -> (35,3): } es de tipo 4
+
+Token: 36,1 }  -> (36,1): } es de tipo 4
+

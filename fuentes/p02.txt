@@ -1,0 +1,16 @@
+class Main {
+  fun main  int a {
+
+    /* comentarios maliciosos */
+    /*1*/
+    int/**/b;
+    float/***/c;
+    print 2/*
+
+         */+/*
+             */3;
+
+    print 12.;  /* devuelve '12', error lexico en '.' */
+  }
+}
+

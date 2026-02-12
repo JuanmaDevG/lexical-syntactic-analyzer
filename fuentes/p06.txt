@@ -1,0 +1,35 @@
+class Main {
+  fun f float a; int b {
+    print a+b    
+  }
+  class A {
+    fun AA int a {
+      fun AAA int b {
+        print a+b
+      }
+      float c;
+      {
+        c = 7.4;
+        int d;
+
+        if c >= a :{
+          print c*10
+        }
+        fi;
+        if c < a :{
+          print a*10
+        }
+        else {
+          print c*15
+        }
+        fi
+      };
+      print a+25
+    }
+  }
+  fun main  int a {
+    float c;
+
+    print 2 * 3
+  }
+}

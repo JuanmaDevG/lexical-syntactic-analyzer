@@ -1,0 +1,50 @@
+Token: 1,1 class  -> (1,1): class es de tipo 10
+
+Token: 1,7 Main  -> (1,7): Main es de tipo 18
+
+Token: 1,12 {  -> (1,12): { es de tipo 3
+
+Token: 2,3 fun  -> (2,3): fun es de tipo 11
+
+Token: 2,7 f  -> (2,7): f es de tipo 18
+
+Token: 2,9 float  -> (2,9): float es de tipo 13
+
+Token: 2,15 a  -> (2,15): a es de tipo 18
+
+Token: 2,16 ;  -> (2,16): ; es de tipo 6
+
+Token: 2,18 int  -> (2,18): int es de tipo 12
+
+Token: 2,22 b  -> (2,22): b es de tipo 18
+
+Token: 2,24 {  -> (2,24): { es de tipo 3
+
+Token: 3,5 print  -> (3,5): print es de tipo 17
+
+Token: 3,11 a  -> (3,11): a es de tipo 18
+
+Token: 3,12 +  -> (3,12): + es de tipo 8
+
+Token: 3,13 b  -> (3,13): b es de tipo 18
+
+Token: 4,3 }  -> (4,3): } es de tipo 4
+
+Token: 5,3 fun  -> (5,3): fun es de tipo 11
+
+Token: 5,7 main  -> (5,7): main es de tipo 18
+
+Token: 5,13 int  -> (5,13): int es de tipo 12
+
+Token: 5,17 a  -> (5,17): a es de tipo 18
+
+Token: 6,5 c  -> (6,5): c es de tipo 18
+
+Token: 6,7 =  -> (6,7): = es de tipo 5
+
+Token: 6,9 7  -> (6,9): 7 es de tipo 19
+
+Token: 8,3 }  -> (8,3): } es de tipo 4
+
+Token: 9,1 }  -> (9,1): } es de tipo 4
+
