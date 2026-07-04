@@ -58,6 +58,20 @@ public class Token {
       NUMREAL = 20,
       EOF = 21;
 
+  public Token(int fila, int columna, int tipo) {
+    this.fila = fila;
+    this.columna = columna;
+    this.tipo = tipo;
+    this.lexema = nombreToken.get(tipo);
+  }
+
+  public Token(int fila, int columna, int tipo, String lexema) {
+    this.fila = fila;
+    this.columna = columna;
+    this.tipo = tipo;
+    this.lexema = lexema;
+  }
+
   public String toString() {
     return nombreToken.get(tipo);
   }
