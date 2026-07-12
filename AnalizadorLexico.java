@@ -8,7 +8,7 @@ public class AnalizadorLexico {
   private int lastType;
   private int lastTkLen;
 
-  private static final int SKIP = 0, FINAL = -1, ERROR = -2;
+  private static final int SKIP = 0, FINAL = -1, SINGLE_SYMBOL = -2, ERROR = -3;
 
   public AnalizadorLexico(RandomAccessFile file) {
     this.file = file;
@@ -33,13 +33,17 @@ public class AnalizadorLexico {
             fila++;
           else
             columna++;
-        }
-        if (next == ERROR) {
+        } else if (next == ERROR) {
+          // TODO: look at the specs
           // Throw exception? Return null?
+        } else if (next == SINGLE_SYMBOL) {
+          lexbuilder.append(c);
+          next = FINAL;
         }
+
         if (next == FINAL) {
           lastTkLen = lexbuilder.length();
-          file.seek(-lexbuilder.length());
+          file.seek(-lastTkLen);
           return new Token(fila, columna, lastType, lexbuilder.toString());
         }
         lexbuilder.append(c);
@@ -55,197 +59,188 @@ public class AnalizadorLexico {
   private int delta(int state, char c) throws IOException {
     switch (state) {
       case 0:
+        // Single symbols
         if (c == '(') {
           lastType = Token.PARI;
-          return FINAL;
+          return SINGLE_SYMBOL;
         } else if (c == ')') {
           lastType = Token.PARD;
-          return FINAL;
+          return SINGLE_SYMBOL;
         } else if (c == ':') {
           lastType = Token.DOSP;
-          return FINAL;
+          return SINGLE_SYMBOL;
         } else if (c == '{') {
           lastType = Token.LBRA;
-          return FINAL;
+          return SINGLE_SYMBOL;
         } else if (c == '}') {
           lastType = Token.RBRA;
-          return FINAL;
+          return SINGLE_SYMBOL;
         } else if (c == ';') {
           lastType = Token.PYC;
-          return FINAL;
-        } else if (c == '-' || c == '+') {
-          lastType = Token.OPAS;
-          return FINAL;
-        } else if (c == '*' || c == '/') {
-          lastType = Token.OPMUL;
-          return FINAL;
-
-        } else if (c == '=') {
-          lastType = Token.OPAS;
-          return 1;
-        } else if (c == '<' || c == '>') {
-          lastType = Token.OPREL;
-          return 1;
-        } else if (c == '!') {
-          lastType = Token.OPREL;
-          return 3;
+          return SINGLE_SYMBOL;
         } else if (c == '+' || c == '-') {
           lastType = Token.OPAS;
-          return 11;
+          return SINGLE_SYMBOL;
         } else if (c == '*' || c == '/') {
           lastType = Token.OPMUL;
+          return SINGLE_SYMBOL;
         }
 
+        // Composed operators
+        else if (c == '=') {
+          return 1;
+        } else if (c == '<' || c == '>') {
+          return 2;
+        } else if (c == '!') {
+          return 3;
+        }
+
+        // Reserved words
         else if (c == 'c')
-          return 5;
+          return 4;
         else if (c == 'f')
-          return 10;
+          return 9;
         else if (c == 'i')
-          return 13;
+          return 17;
         else if (c == 'e')
           return 21;
-        else if (c == 'p')
-          return 26;
-        else {
+        else if (c == 'p') {
+          return 25;
+        }
+
+        // Generics
+        else if (belongsToID(c)) {
+          return 123;
+        } else {
           return SKIP;
         }
 
-        // Symbols
       case 1:
         if (c == '=') {
           lastType = Token.OPREL;
-          return FINAL;
+          return SINGLE_SYMBOL;
+        }
+        lastType = Token.ASIG;
+        file.seek(-1);
+        return FINAL;
+      case 2:
+        lastType = Token.OPREL;
+        if (c == '=') {
+          return SINGLE_SYMBOL;
         }
         file.seek(-1);
         return FINAL;
       case 3:
         if (c == '=') {
-          return FINAL;
+          lastType = Token.OPREL;
+          return SINGLE_SYMBOL;
         }
-        file.seek(-1);
         return ERROR;
 
       // Reserved words
-      case 5:
+      case 4:
         if (c == 'l')
-          return 6;
-        if (belongsToID(c))
-          return 31;
-      case 6:
+          return 5;
+        break;
+      case 5:
         if (c == 'a')
+          return 6;
+        break;
+      case 6:
+        if (c == 's')
           return 7;
-        if (belongsToID(c))
-          return 31;
+        break;
       case 7:
         if (c == 's')
           return 8;
-        if (belongsToID(c))
-          return 31;
+        break;
       case 8:
-        if (c == 's')
-          return 9;
-        if (belongsToID(c))
-          return 31;
-      case 9:
         lastType = Token.CLASS;
-        return FINAL;
-      case 10:
-        if (c == 'u')
+        break;
+      case 9:
+        if (c == 'i')
+          return 10;
+        else if (c == 'u')
           return 11;
         else if (c == 'l')
-          return 16;
-        else if (c == 'i')
-          return 25;
-        if (belongsToID(c))
-          return 31;
+          return 13;
+        break;
+      case 10:
+        lastType = Token.FI;
+        break;
       case 11:
         if (c == 'n')
           return 12;
-        if (belongsToID(c))
-          return 31;
+        break;
       case 12:
         lastType = Token.FUN;
-        return FINAL;
+        break;
       case 13:
-        if (c == 'n')
+        if (c == 'o')
           return 14;
-        if (c == 'f')
-          return 20;
-        if (belongsToID(c))
-          return 31;
+        break;
       case 14:
-        if (c == 't')
+        if (c == 'a')
           return 15;
-        if (belongsToID(c))
-          return 31;
+        break;
       case 15:
-        lastType = Token.INT;
-        return FINAL;
+        if (c == 't')
+          return 16;
+        break;
       case 16:
         if (c == 'o')
           return 17;
-        if (belongsToID(c))
-          return 31;
+        break;
       case 17:
-        if (c == 'a')
-          return 18;
-        if (belongsToID(c))
-          return 31;
+        if (c == 'f')
+          return 10;
+        else if (c == 'n')
+          return 11;
+        break;
       case 18:
-        if (c == 't')
-          return 19;
-        if (belongsToID(c))
-          return 31;
-      case 19:
-        lastType = Token.FLOAT;
-        return FINAL;
-      case 20:
         lastType = Token.IF;
-        return FINAL;
+        break;
+      case 19:
+        if (c == 't')
+          return 20;
+        break;
+      case 20:
+        lastType = Token.INT;
+        break;
       case 21:
         if (c == 'l')
           return 22;
-        if (belongsToID(c))
-          return 31;
+        break;
       case 22:
         if (c == 's')
           return 23;
-        if (belongsToID(c))
-          return 31;
+        break;
       case 23:
         if (c == 'e')
           return 24;
-        if (belongsToID(c))
-          return 31;
+        break;
       case 24:
         lastType = Token.ELSE;
-        return FINAL;
+        break;
       case 25:
-        lastType = Token.FI;
-        return FINAL;
-      case 26:
         if (c == 'r')
-          return 27;
-        if (belongsToID(c))
-          return 31;
-      case 27:
+          return 26;
+        break;
+      case 26:
         if (c == 'i')
-          return 28;
-        if (belongsToID(c))
-          return 31;
-      case 28:
+          return 27;
+        break;
+      case 27:
         if (c == 'n')
-          return 29;
-        if (belongsToID(c))
-          return 31;
-      case 29:
+          return 28;
+        break;
+      case 28:
         if (c == 't')
-          return 30;
-        if (belongsToID(c))
-          return 31;
-      case 30:
+          return 29;
+        break;
+      case 29:
         lastType = Token.PRINT;
-        return FINAL;
+        break;
 
       // Special cases
       case 31:
@@ -254,6 +249,10 @@ public class AnalizadorLexico {
       default:
         return SKIP;
     }
+
+    // TODO: reaching this point means generic checks
+    // and file seek -1, return FINAL
+    return SKIP;
   }
 
   private boolean belongsToID(char c) {
