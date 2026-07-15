@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.StringBuilder;
+import java.text.MessageFormat;
 
 public class AnalizadorLexico {
   private RandomAccessFile file;
@@ -34,8 +35,9 @@ public class AnalizadorLexico {
           else
             columna++;
         } else if (next == ERROR) {
-          // TODO: look at the specs
-          // Throw exception? Return null?
+          System.out
+              .println(MessageFormat.format("Error lexico ({0},{1}): caracter '{2}' incorrecto", fila, columna, c));
+          System.exit(-1);
         } else if (next == SINGLE_SYMBOL) {
           lexbuilder.append(c);
           next = FINAL;
@@ -49,7 +51,15 @@ public class AnalizadorLexico {
         lexbuilder.append(c);
 
         state = next;
-        c = (char) file.readByte();
+        try {
+          c = (char) file.readByte();
+        } catch (IOException ioex) {
+          if (state != SKIP) {
+            System.out.println("Error lexico: fin de fichero inesperado");
+            System.exit(-1);
+          } else
+            return new Token(fila, columna, Token.EOF);
+        }
       } while (true);
     } catch (IOException ioex) {
       return new Token(fila, columna, Token.EOF);
@@ -59,8 +69,12 @@ public class AnalizadorLexico {
   private int delta(int state, char c) throws IOException {
     switch (state) {
       case 0:
+        if (canBeIgnored(c)) {
+          return SKIP;
+        }
+
         // Single symbols
-        if (c == '(') {
+        else if (c == '(') {
           lastType = Token.PARI;
           return SINGLE_SYMBOL;
         } else if (c == ')') {
@@ -109,8 +123,10 @@ public class AnalizadorLexico {
         }
 
         // Generics
-        else if (belongsToID(c)) {
-          return 123;
+        else if (isAlpha(c)) {
+          return 30;
+        } else if (isNumeric(c)) {
+          return 31;
         } else {
           return SKIP;
         }
@@ -242,20 +258,59 @@ public class AnalizadorLexico {
         lastType = Token.PRINT;
         break;
 
-      // Special cases
+      // ID
+      case 30:
+        if (belongsToID(c)) {
+          return 30;
+        }
+        lastType = Token.ID;
+        break;
+
+      // Integer
       case 31:
-        // id code
+        if (isNumeric(c))
+          return 31;
+        else if (c == '.')
+          return 32;
+        lastType = Token.NUMENTERO;
+        break;
+
+      // Float
+      case 32:
+        if (isNumeric(c))
+          return 33;
+        else
+          return ERROR;
+      case 33:
+        if (isNumeric(c))
+          return 33;
+        lastType = Token.FLOAT;
+        break;
 
       default:
         return SKIP;
     }
 
-    // TODO: reaching this point means generic checks
-    // and file seek -1, return FINAL
-    return SKIP;
+    if (state >= 4 && state <= 29 && belongsToID(c))
+      return 30;
+
+    file.seek(-1);
+    return FINAL;
   }
 
   private boolean belongsToID(char c) {
     return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'));
+  }
+
+  private boolean isAlpha(char c) {
+    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+  }
+
+  private boolean isNumeric(char c) {
+    return (c >= '0' && c <= '9');
+  }
+
+  private boolean canBeIgnored(char c) {
+    return (c == ' ' || c == '\t' || c == '\n');
   }
 }
