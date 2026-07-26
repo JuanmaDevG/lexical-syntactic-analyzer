@@ -24,7 +24,8 @@ public class AnalizadorLexico {
     int state = 0, next;
 
     try {
-      file.seek(lastTkLen);
+      file.seek(file.getFilePointer() + lastTkLen);
+      columna += lastTkLen;
       c = (char) file.readByte();
 
       do {
@@ -45,7 +46,7 @@ public class AnalizadorLexico {
 
         if (next == FINAL) {
           lastTkLen = lexbuilder.length();
-          file.seek(-lastTkLen);
+          file.seek(file.getFilePointer() - lastTkLen);
           return new Token(fila, columna, lastType, lexbuilder.toString());
         }
         lexbuilder.append(c);
@@ -137,14 +138,14 @@ public class AnalizadorLexico {
           return SINGLE_SYMBOL;
         }
         lastType = Token.ASIG;
-        file.seek(-1);
+        file.seek(file.getFilePointer() - 1);
         return FINAL;
       case 2:
         lastType = Token.OPREL;
         if (c == '=') {
           return SINGLE_SYMBOL;
         }
-        file.seek(-1);
+        file.seek(file.getFilePointer() - 1);
         return FINAL;
       case 3:
         if (c == '=') {
@@ -294,7 +295,7 @@ public class AnalizadorLexico {
     if (state >= 4 && state <= 29 && belongsToID(c))
       return 30;
 
-    file.seek(-1);
+    file.seek(file.getFilePointer() - 1);
     return FINAL;
   }
 
