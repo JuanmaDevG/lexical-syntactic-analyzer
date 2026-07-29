@@ -13,8 +13,8 @@ public class AnalizadorLexico {
 
   public AnalizadorLexico(RandomAccessFile file) {
     this.file = file;
-    fila = 0;
-    columna = 0;
+    fila = 1;
+    columna = 1;
     lastTkLen = 0;
   }
 
@@ -31,10 +31,14 @@ public class AnalizadorLexico {
       do {
         next = delta(state, c);
         if (next == SKIP) {
-          if (c == '\n')
+          if (c == '\n') {
             fila++;
-          else
+            columna = 1;
+          } else {
             columna++;
+          }
+          c = (char) file.readByte();
+          continue;
         } else if (next == ERROR) {
           System.out
               .println(MessageFormat.format("Error lexico ({0},{1}): caracter '{2}' incorrecto", fila, columna, c));
@@ -111,7 +115,8 @@ public class AnalizadorLexico {
         }
 
         // Reserved words
-        else if (c == 'c')
+        lastType = Token.ID;
+        if (c == 'c')
           return 4;
         else if (c == 'f')
           return 9;
@@ -202,7 +207,7 @@ public class AnalizadorLexico {
         break;
       case 15:
         if (c == 't')
-          return 16;
+          return 34;
         break;
       case 16:
         if (c == 'o')
@@ -210,9 +215,9 @@ public class AnalizadorLexico {
         break;
       case 17:
         if (c == 'f')
-          return 10;
+          return 18;
         else if (c == 'n')
-          return 11;
+          return 19;
         break;
       case 18:
         lastType = Token.IF;
@@ -285,6 +290,11 @@ public class AnalizadorLexico {
       case 33:
         if (isNumeric(c))
           return 33;
+        lastType = Token.NUMREAL;
+        break;
+
+      // Float keyword
+      case 34:
         lastType = Token.FLOAT;
         break;
 
