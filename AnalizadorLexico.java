@@ -27,6 +27,7 @@ public class AnalizadorLexico {
       file.seek(file.getFilePointer() + lastTkLen);
       columna += lastTkLen;
       c = (char) file.readByte();
+      ignoreComments();
 
       do {
         next = delta(state, c);
@@ -307,6 +308,26 @@ public class AnalizadorLexico {
 
     file.seek(file.getFilePointer() - 1);
     return FINAL;
+  }
+
+  private void ignoreComments() throws IOException {
+    boolean finished = false;
+    long fp = file.getFilePointer();
+
+    while (!finished) {
+      while (canBeIgnored((char) file.readByte()))
+        ;
+      if ((char) file.readByte() == '/' && (char) file.readByte() == '*') {
+        while (!finished) {
+          if ((char) file.readByte() == '*' && (char) file.readByte() == '/') {
+            finished = true;
+          }
+        }
+      } else {
+        file.seek(fp);
+        finished = true;
+      }
+    }
   }
 
   private boolean belongsToID(char c) {
