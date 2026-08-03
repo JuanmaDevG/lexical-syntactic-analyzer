@@ -23,22 +23,18 @@ public class AnalizadorLexico {
     char c;
     int state = 0, next;
 
+    // TODO: If first char EOF, is good, otherwise bad EOF and remove new exception
+
     try {
       file.seek(file.getFilePointer() + lastTkLen);
       columna += lastTkLen;
-      c = (char) file.readByte();
       ignoreComments();
 
       do {
+        c = (char) file.readByte();
+        incrementLoc(c);
         next = delta(state, c);
         if (next == SKIP) {
-          if (c == '\n') {
-            fila++;
-            columna = 1;
-          } else {
-            columna++;
-          }
-          c = (char) file.readByte();
           continue;
         } else if (next == ERROR) {
           System.out
@@ -57,17 +53,12 @@ public class AnalizadorLexico {
         lexbuilder.append(c);
 
         state = next;
-        try {
-          c = (char) file.readByte();
-        } catch (IOException ioex) {
-          if (state != SKIP) {
-            System.out.println("Error lexico: fin de fichero inesperado");
-            System.exit(-1);
-          } else
-            return new Token(fila, columna, Token.EOF);
-        }
       } while (true);
     } catch (IOException ioex) {
+      System.out.println("Error lexico: fin de fichero inesperado");
+      return new Token(fila, columna, Token.EOF);
+    } catch (BadEOFException beofex) {
+      // TODO: remove new exception, all EOF inside loop is bad EOF
       return new Token(fila, columna, Token.EOF);
     }
   }
@@ -310,22 +301,41 @@ public class AnalizadorLexico {
     return FINAL;
   }
 
-  private void ignoreComments() throws IOException {
-    boolean finished = false;
-    long fp = file.getFilePointer();
+  private void ignoreComments() throws IOException, BadEOFException {
+    boolean finished;
+    long fp;
+    char c;
 
-    while (!finished) {
-      while (canBeIgnored((char) file.readByte()))
-        ;
-      if ((char) file.readByte() == '/' && (char) file.readByte() == '*') {
-        while (!finished) {
-          if ((char) file.readByte() == '*' && (char) file.readByte() == '/') {
-            finished = true;
+    while (true) {
+      while (canBeIgnored((c = (char) file.readByte())))
+        incrementLoc(c);
+      fp = file.getFilePointer() - 1;
+      if (c != '/') {
+        file.seek(fp);
+        return;
+      }
+
+      columna++;
+      if ((char) file.readByte() == '*') {
+        columna++;
+        try {
+          finished = false;
+          while (!finished) {
+            c = (char) file.readByte();
+            incrementLoc(c);
+            if (c == '*') {
+              c = (char) file.readByte();
+              incrementLoc(c);
+              if (c == '/')
+                finished = true;
+            }
           }
+        } catch (IOException ioex) {
+          throw new BadEOFException("ERROR: fin de fichero incorrecto, termina el comentario con \"*/\"");
         }
       } else {
         file.seek(fp);
-        finished = true;
+        return;
       }
     }
   }
@@ -344,5 +354,20 @@ public class AnalizadorLexico {
 
   private boolean canBeIgnored(char c) {
     return (c == ' ' || c == '\t' || c == '\n');
+  }
+
+  private void incrementLoc(char c) {
+    if (c == '\n') {
+      fila++;
+      columna = 1;
+    } else {
+      columna++;
+    }
+  }
+}
+
+class BadEOFException extends Exception {
+  public BadEOFException(String msg) {
+    super(msg);
   }
 }
