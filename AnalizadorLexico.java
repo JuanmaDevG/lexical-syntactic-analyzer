@@ -23,7 +23,13 @@ public class AnalizadorLexico {
     char c;
     int state = 0, next;
 
-    // TODO: If first char EOF, is good, otherwise bad EOF and remove new exception
+    // First as EOF is correct end of file
+    try {
+      file.readByte();
+      file.seek(file.getFilePointer() - 1);
+    } catch (IOException ioex) {
+      return new Token(fila, columna, Token.EOF);
+    }
 
     try {
       file.seek(file.getFilePointer() + lastTkLen);
@@ -32,13 +38,13 @@ public class AnalizadorLexico {
 
       do {
         c = (char) file.readByte();
-        incrementLoc(c);
         next = delta(state, c);
         if (next == SKIP) {
           continue;
         } else if (next == ERROR) {
-          System.out
-              .println(MessageFormat.format("Error lexico ({0},{1}): caracter '{2}' incorrecto", fila, columna, c));
+          System.err
+              .println(MessageFormat.format("Error lexico ({0},{1}): caracter '{2}' incorrecto", fila,
+                  columna + lastTkLen, c));
           System.exit(-1);
         } else if (next == SINGLE_SYMBOL) {
           lexbuilder.append(c);
@@ -56,9 +62,6 @@ public class AnalizadorLexico {
       } while (true);
     } catch (IOException ioex) {
       System.out.println("Error lexico: fin de fichero inesperado");
-      return new Token(fila, columna, Token.EOF);
-    } catch (BadEOFException beofex) {
-      // TODO: remove new exception, all EOF inside loop is bad EOF
       return new Token(fila, columna, Token.EOF);
     }
   }
@@ -301,7 +304,7 @@ public class AnalizadorLexico {
     return FINAL;
   }
 
-  private void ignoreComments() throws IOException, BadEOFException {
+  private void ignoreComments() throws IOException {
     boolean finished;
     long fp;
     char c;
@@ -314,26 +317,23 @@ public class AnalizadorLexico {
         file.seek(fp);
         return;
       }
-
       columna++;
+
       if ((char) file.readByte() == '*') {
         columna++;
-        try {
-          finished = false;
-          while (!finished) {
+        finished = false;
+        while (!finished) {
+          c = (char) file.readByte();
+          incrementLoc(c);
+          if (c == '*') {
             c = (char) file.readByte();
             incrementLoc(c);
-            if (c == '*') {
-              c = (char) file.readByte();
-              incrementLoc(c);
-              if (c == '/')
-                finished = true;
-            }
+            if (c == '/')
+              finished = true;
           }
-        } catch (IOException ioex) {
-          throw new BadEOFException("ERROR: fin de fichero incorrecto, termina el comentario con \"*/\"");
         }
       } else {
+        columna--;
         file.seek(fp);
         return;
       }
