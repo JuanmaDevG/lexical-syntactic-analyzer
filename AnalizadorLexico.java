@@ -44,7 +44,7 @@ public class AnalizadorLexico {
         } else if (next == ERROR) {
           System.err
               .println(MessageFormat.format("Error lexico ({0},{1}): caracter '{2}' incorrecto", fila,
-                  columna + lastTkLen, c));
+                  columna + lastTkLen, c)); // TODO: character c does not print correctly
           System.exit(-1);
         } else if (next == SINGLE_SYMBOL) {
           lexbuilder.append(c);
